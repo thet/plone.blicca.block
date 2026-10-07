@@ -1,0 +1,19 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+>
+
+  <!-- The block add-on contract's dispatch convention:
+       BlockDispatchMixin.render_block_data looks the renderer up by the name
+       `aurora-block-<@type>`.
+  -->
+  <browser:page
+      name="aurora-block-demo-block"
+      for="*"
+      class=".view.View"
+      template="view.pt"
+      permission="zope2.View"
+      layer="plone.blicca.block.interfaces.IBrowserLayer"
+      />
+
+</configure>

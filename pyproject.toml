@@ -1,0 +1,149 @@
+[project]
+name = "plone.blicca.block"
+dynamic = ["version"]
+description = "Blueprint for creating Aurora blocks for Plone Blicca."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "GPL-2.0-or-later" }
+authors = [{ name = "Plone Foundation", email = "releasemanager@plone.org" }]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Web Environment",
+    "Framework :: Plone",
+    "Framework :: Plone :: Addon",
+    "Framework :: Plone :: 6.2",
+    "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+keywords = ["CMS", "Plone", "Python"]
+
+dependencies = ["Plone>=6.2", "plone.blicca.auroraeditor>=1.0.0a2"]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-cov",
+    "pytest-plone",
+    "plone.app.testing",
+    "plone.testing",
+]
+
+[project.urls]
+Homepage = "https://github.com/plone/plone.blicca.block"
+Documentation = "https://github.com/plone/plone.blicca.block"
+Repository = "https://github.com/plone/plone.blicca.block.git"
+Issues = "https://github.com/plone/plone.blicca.block/issues"
+
+[project.entry-points."z3c.autoinclude.plugin"]
+target = "plone"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/plone"]
+
+[tool.hatch.version]
+path = "src/plone/blicca/block/__init__.py"
+
+[tool.uv]
+managed = true
+
+[tool.uv.sources]
+# plone.blicca.auroraeditor is PRIVATE and not on PyPI. Locally it is the
+# sibling checkout under sources/; CI checks it out beside this repository so
+# the same relative path resolves there. uv ignores a dependency's own
+# sources, so this governs this package's lock and nothing else.
+"plone.blicca.auroraeditor" = { path = "../plone.blicca.auroraeditor", editable = true }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source_pkgs = ["plone.blicca.block", "tests"]
+branch = true
+parallel = true
+omit = ["src/plone/blicca/block/locales/*.py"]
+
+[tool.zest-releaser]
+python-file-with-version = "src/plone/blicca/block/__init__.py"
+
+[tool.towncrier]
+directory = "news/"
+filename = "CHANGELOG.md"
+start_string = "<!-- towncrier release notes start -->\n"
+title_format = "## {version} ({project_date})"
+template = "news/.changelog_template.jinja"
+issue_format = "[#{issue}](https://github.com/plone/plone.blicca.block/issues/{issue})"
+underlines = ["", "", ""]
+
+[[tool.towncrier.type]]
+directory = "breaking"
+name = "Breaking"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "feature"
+name = "Feature"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "bugfix"
+name = "Bugfix"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "internal"
+name = "Internal"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "documentation"
+name = "Documentation"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "tests"
+name = "Tests"
+showcontent = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "I",   # isort
+    "W",   # pycodestyle warnings
+    "C90", # mccabe complexity
+    "B",   # bugbear
+    "S",   # bandit (security)
+    "UP",  # pyupgrade
+    "SIM", # simplify
+    "PGH", # pygrep-hooks
+]
+ignore = ["E731"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101"]
+# Locale update helper shells out to fixed translation tools (i18ndude/msginit).
+"src/**/locales/update.py" = ["S603", "S607"]
+
+[tool.ruff.lint.isort]
+# Match the single-import-per-line, alphabetical layout the templates emit.
+force-single-line = true
+order-by-type = false
+lines-after-imports = 2
+known-first-party = ["plone.blicca.block"]
+
+[tool.ruff.format]
+preview = true

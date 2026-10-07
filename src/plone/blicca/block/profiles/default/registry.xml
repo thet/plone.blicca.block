@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<registry>
+
+  <records
+      interface="plone.blicca.auroraeditor.interfaces.IAuroraBlockAddon"
+      prefix="plone.blicca.auroraeditor.blockaddons/plone.blicca.block.demo-block"
+      >
+    <value key="bundle">++plone++plone.blicca.block/demo-block.js</value>
+    <value key="css">++plone++plone.blicca.block/demo-block.css</value>
+    <value key="types">
+      <element>demo-block</element>
+    </value>
+    <value key="permission">plone.blicca.block: Insert Block</value>
+    <value key="enabled">True</value>
+    <value key="weight">100</value>
+    <value key="block_api">1.0</value>
+  </records>
+
+</registry>

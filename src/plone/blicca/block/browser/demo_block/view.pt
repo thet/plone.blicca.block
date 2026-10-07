@@ -1,0 +1,11 @@
+<!--! Also see `resources/src/demo-block/View.tsx` -->
+<div class="demo-block">
+  <div class="demo-block-copy" tal:condition="view/available">
+    <h2 class="demo-block-title"
+        tal:condition="view/title"
+        tal:content="view/title">Title</h2>
+    <p class="demo-block-description"
+       tal:condition="view/description"
+       tal:content="view/description">Description</p>
+  </div>
+</div>

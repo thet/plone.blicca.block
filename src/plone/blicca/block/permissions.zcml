@@ -1,0 +1,8 @@
+<configure xmlns="http://namespaces.zope.org/zope">
+
+  <permission
+      id="plone.blicca.block.InsertBlock"
+      title="plone.blicca.block: Insert Block"
+      />
+
+</configure>

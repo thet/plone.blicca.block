@@ -1,0 +1,57 @@
+@scope (.aurora-editor, .aurora-editor-portal, .aurora-blocks-view) to (.aurora-pattern-island) {/*
+ * The demo block's stylesheet. It is used for both:
+ *  - the React view (src/demo-block/View.tsx)
+ *  - and the Chameleon template (views/demo_block_view.pt)
+ */.demo-block {
+  display: grid;
+  gap: var(--demo-block-gap, 2rem);
+  box-sizing: border-box;
+  container: demo-block / inline-size;
+  border: var(--demo-block-border, none);
+  border-radius: var(--demo-block-radius, 0);
+  padding: var(--demo-block-padding, 0);
+  white-space: normal;
+
+  /* Long words and wide media must not push a track open; `1fr` alone is
+  * `minmax(auto, 1fr)` and would. */
+  & > * {
+    box-sizing: border-box;
+    min-width: 0;
+  }
+
+  .demo-block-copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--demo-block-flow, 0.75rem);
+    max-width: var(--demo-block-measure, 60ch);
+  }
+
+  /* Zeroing these margins is a PARITY statement, not a look choice. Barceloneta
+  * gives `h2` and `p` their own margins; Aurora's Tailwind preflight zeroes
+  * them. Left alone, the same demo-block would be spaced differently in the two
+  * hosts, and inside Blicca the canvas and the published page would disagree —
+  * which is the one thing this sheet exists to prevent. `--demo-block-flow` is the
+  * handle that gives the rhythm back. */
+  .demo-block-title,
+  .demo-block-description {
+    margin: 0;
+  }
+
+  .demo-block-title {
+    font-size: var(--demo-block-title-size, 1.75rem);
+  }
+
+  .demo-block-description {
+    font-size: var(--demo-block-description-size, 1rem);
+  }
+}/* EDIT styles */.demo-block-notice {
+  margin-block: 0.5rem 0;
+  border-inline-start: 2px solid;
+  padding-inline-start: 0.5rem;
+  /* A system colour again — quiet on any ground, in either colour scheme,
+   * with no token to import. */
+  color: GrayText;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}/*$vite$:1*/
+}

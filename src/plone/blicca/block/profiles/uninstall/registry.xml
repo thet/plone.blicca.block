@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<registry>
+
+  <records
+      interface="plone.blicca.auroraeditor.interfaces.IAuroraBlockAddon"
+      prefix="plone.blicca.auroraeditor.blockaddons/plone.blicca.block.demo-block"
+      remove="true"
+      />
+
+</registry>

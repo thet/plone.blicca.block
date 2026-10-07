@@ -1,0 +1,90 @@
+{
+  "cases": [
+    {
+      "name": "empty",
+      "data": {},
+      "html": "<div class=\"demo-block\"></div>"
+    },
+    {
+      "name": "title-only",
+      "data": {
+        "title": "Plone"
+      },
+      "html": "<div class=\"demo-block\"><div class=\"demo-block-copy\"><h2 class=\"demo-block-title\">Plone</h2></div></div>"
+    },
+    {
+      "name": "description-only",
+      "data": {
+        "description": "A demo."
+      },
+      "html": "<div class=\"demo-block\"><div class=\"demo-block-copy\"><p class=\"demo-block-description\">A demo.</p></div></div>"
+    },
+    {
+      "name": "complete",
+      "data": {
+        "title": "Plone",
+        "description": "A demo."
+      },
+      "html": "<div class=\"demo-block\"><div class=\"demo-block-copy\"><h2 class=\"demo-block-title\">Plone</h2><p class=\"demo-block-description\">A demo.</p></div></div>"
+    },
+    {
+      "name": "trimmed",
+      "data": {
+        "title": "  Plone\n",
+        "description": "\tA demo.  "
+      },
+      "html": "<div class=\"demo-block\"><div class=\"demo-block-copy\"><h2 class=\"demo-block-title\">Plone</h2><p class=\"demo-block-description\">A demo.</p></div></div>"
+    },
+    {
+      "name": "whitespace-only",
+      "data": {
+        "title": " \n ",
+        "description": "\t"
+      },
+      "html": "<div class=\"demo-block\"></div>"
+    },
+    {
+      "name": "null-values",
+      "data": {
+        "title": null,
+        "description": null
+      },
+      "html": "<div class=\"demo-block\"></div>"
+    },
+    {
+      "name": "non-string-values",
+      "data": {
+        "title": 42,
+        "description": {
+          "text": "ignored"
+        }
+      },
+      "html": "<div class=\"demo-block\"></div>"
+    },
+    {
+      "name": "escaped-text",
+      "data": {
+        "title": "<script> & title",
+        "description": "A < B & B > C"
+      },
+      "html": "<div class=\"demo-block\"><div class=\"demo-block-copy\"><h2 class=\"demo-block-title\">&lt;script&gt; &amp; title</h2><p class=\"demo-block-description\">A &lt; B &amp; B &gt; C</p></div></div>"
+    },
+    {
+      "name": "multiline",
+      "data": {
+        "title": "Demo",
+        "description": "First line.\nSecond line."
+      },
+      "html": "<div class=\"demo-block\"><div class=\"demo-block-copy\"><h2 class=\"demo-block-title\">Demo</h2><p class=\"demo-block-description\">First line.\nSecond line.</p></div></div>"
+    },
+    {
+      "name": "host-styles",
+      "data": {
+        "title": "Plone",
+        "blockWidth": "full",
+        "backgroundColor": "blue"
+      },
+      "html": "<div class=\"demo-block\"><div class=\"demo-block-copy\"><h2 class=\"demo-block-title\">Plone</h2></div></div>"
+    }
+  ]
+}
