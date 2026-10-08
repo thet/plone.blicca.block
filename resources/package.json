@@ -17,7 +17,8 @@
     "!src/**/*.test.*"
   ],
   "scripts": {
-    "build": "vite build",
+    "build": "pnpm run build-demo-block",
+    "build-demo-block": "vite build --config vite.demo-block.config.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --fix",

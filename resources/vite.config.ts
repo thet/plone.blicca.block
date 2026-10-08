@@ -1,15 +1,9 @@
-// The canonical block add-on library build (block add-on contract §1.2):
-// ESM lib, automatic JSX runtime, every promised shared module external
-// (resolved in the browser via the @@aurora-edit import map to the host's
-// facades), CSS scope-wrapped in the same build. Output is committed into
-// the Python package's static/ (ADR 0010 style) — Node is a packaging-time
-// tool only, never an install-time one.
+// Bundles are exported modules, listed in the @@aurora-edit import map. (TODO: verify)
 import path from 'node:path';
 import { defineConfig, type Plugin } from 'vite';
 import { scopeWrap } from './build-plugins/scope-wrap';
 
-// The promised singleton-critical modules (contract §2.1). Anything else
-// the bundle must carry itself.
+// Singleton-critical modules.
 const SHARED_MODULES = [
   'react',
   'react/jsx-runtime',
@@ -22,7 +16,7 @@ const SHARED_MODULES = [
 ];
 
 // A promised module leaking into the bundle means two Reacts at runtime
-// (null hook dispatcher) — fail the build instead (contract §1.2).
+// (null hook dispatcher) — fail the build instead.
 function assertNoSharedInBundle(): Plugin {
   const banned =
     /\/node_modules\/(?:\.pnpm\/[^/]+\/node_modules\/)?(react|react-dom|jotai|platejs|@plone\/registry|@plone\/helpers)\//;
@@ -41,48 +35,43 @@ function assertNoSharedInBundle(): Plugin {
   };
 }
 
-export default defineConfig({
-  // Lib mode defaults to the classic JSX transform, which crashes at render
-  // time on the missing global React; the automatic runtime resolves
-  // react/jsx-runtime through the import map instead.
-  esbuild: { jsx: 'automatic' },
-  plugins: [
-    {
-      // enforce post: in a lib build Vite's internal css-post plugin emits
-      // the CSS asset late in generateBundle; the wrap must run after it.
-      ...scopeWrap({
-        // The editor's roots plus the public blocks-view root (contract
-        // §6.1): one asset styles both surfaces via anatomy-class parity.
-        scopeRoots: [
-          '.aurora-editor',
-          '.aurora-editor-portal',
-          '.aurora-blocks-view',
-        ],
-        scopeLimit: '.aurora-pattern-island',
-      }),
-      enforce: 'post',
-    },
-    assertNoSharedInBundle(),
-  ],
-  build: {
-    lib: {
-      entry: path.resolve(import.meta.dirname, 'src/index.ts'),
-      formats: ['es'],
-      fileName: () => 'demo-block.js',
-    },
-    outDir: path.resolve(
-      import.meta.dirname,
-      '../src/plone/blicca/block/static',
-    ),
-    emptyOutDir: false,
-    target: 'es2022',
-    minify: false,
-    sourcemap: true,
-    rollupOptions: {
-      external: SHARED_MODULES,
-      output: {
-        assetFileNames: 'demo-block.[ext]',
+export function blockBuild(blockType: string) {
+  return defineConfig({
+    // Lib mode defaults to the classic JSX transform, which crashes at render
+    // time on the missing global React; the automatic runtime resolves
+    // react/jsx-runtime through the import map instead.
+    esbuild: { jsx: "automatic" },
+    plugins: [
+      {
+        // enforce post: in a lib build Vite's internal css-post plugin emits
+        // the CSS asset late in generateBundle; the wrap must run after it.
+        ...scopeWrap({
+          // The editor's roots plus the public blocks-view root (contract
+          // §6.1): one asset styles both surfaces via anatomy-class parity.
+          scopeRoots: [".aurora-editor", ".aurora-editor-portal", ".aurora-blocks-view"],
+          scopeLimit: ".aurora-pattern-island",
+        }),
+        enforce: "post",
+      },
+      assertNoSharedInBundle(),
+    ],
+    build: {
+      lib: {
+        entry: path.resolve(import.meta.dirname, `src/${blockType}/index.ts`),
+        formats: ["es"],
+        fileName: () => `${blockType}.js`,
+      },
+      outDir: path.resolve(import.meta.dirname, "../src/plone/blicca/block/static"),
+      emptyOutDir: false,
+      target: "es2022",
+      minify: false,
+      sourcemap: true,
+      rollupOptions: {
+        external: SHARED_MODULES,
+        output: {
+          assetFileNames: `${blockType}.[ext]`,
+        },
       },
     },
-  },
-});
+  });
+}
