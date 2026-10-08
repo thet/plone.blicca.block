@@ -7,7 +7,7 @@
 
   <i18n:registerTranslations directory="locales" />
   <include file="permissions.zcml" />
-  <include package=".browser" />
+  <include package=".blocks" />
 
   <plone:static
       name="plone.blicca.block"

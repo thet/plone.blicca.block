@@ -2,7 +2,7 @@
 
 import pytest
 
-from plone.blicca.block.browser.demo_block.data import text
+from plone.blicca.block.blocks.demo_block.data import text
 
 
 @pytest.mark.parametrize("value", [None, 0, 42, False, True, [], {}])

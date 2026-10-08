@@ -2,8 +2,7 @@ import re
 
 from plone.blicca.auroraeditor.rendering import BaseBlockView
 
-from plone.blicca.block.browser.demo_block import data
-
+from plone.blicca.block.blocks.demo_block import data
 
 #: Template indentation, between two tags. Collapsed away — see ``__call__``.
 _INDENT = re.compile(r">\s+<")

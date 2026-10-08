@@ -10,17 +10,14 @@ block in the slash menu of a site that can no longer render it.
 """
 
 import pytest
-from plone.app.testing import setRoles
-from plone.app.testing import TEST_USER_ID
+from plone.app.testing import TEST_USER_ID, setRoles
 from plone.blicca.auroraeditor import blockaddons
 from plone.blicca.auroraeditor.interfaces import IAuroraBlockAddon
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 
 from plone import api
-from plone.blicca.block.blocks import DEMO_BLOCK_TYPE
 from plone.blicca.block.interfaces import IBrowserLayer
-
 
 #: The record's name under the add-on prefix, and the resource directory
 #: `configure.zcml` publishes. Spelled here so a rename shows up as a failing
@@ -62,7 +59,7 @@ class TestSetup:
         record = block_addon_records()[RECORD_NAME]
         assert record.bundle == f"{RESOURCE}/demo-block.js"
         assert record.css == f"{RESOURCE}/demo-block.css"
-        assert record.types == [DEMO_BLOCK_TYPE]
+        assert record.types == ["demo-block"]
         assert record.enabled
         assert record.weight == 100
 

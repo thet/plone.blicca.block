@@ -9,13 +9,12 @@ from zope.component import getMultiAdapter
 from zope.interface import alsoProvides
 from zope.publisher.browser import TestRequest as BrowserRequest
 
-from plone.blicca.block.blocks import DEMO_BLOCK_TYPE
 from plone.blicca.block.interfaces import IBrowserLayer
 
-
+BLOCK_TYPE = "demo-block"
 FIXTURE = Path(__file__).with_name("anatomy-cases.json")
 CASES = json.loads(FIXTURE.read_text(encoding="utf-8"))["cases"]
-VIEW_NAME = f"aurora-block-{DEMO_BLOCK_TYPE}"
+VIEW_NAME = f"aurora-block-{BLOCK_TYPE}"
 
 
 @pytest.fixture
@@ -32,7 +31,7 @@ def view(integration, block_request):
 
 @pytest.mark.parametrize("case", CASES, ids=lambda case: case["name"])
 def test_shared_anatomy(view, case):
-    view.data = {"@type": DEMO_BLOCK_TYPE, **case["data"]}
+    view.data = {"@type": BLOCK_TYPE, **case["data"]}
     assert view() == case["html"]
 
 
@@ -45,7 +44,7 @@ def test_dispatcher_finds_demo_block(integration, block_request):
     dispatcher = BlockDispatchMixin()
     dispatcher.context = integration["portal"]
     dispatcher.request = block_request
-    assert dispatcher.render_block_data({"@type": DEMO_BLOCK_TYPE, "title": "Plone"}) == (
+    assert dispatcher.render_block_data({"@type": BLOCK_TYPE, "title": "Plone"}) == (
         '<div class="demo-block"><div class="demo-block-copy">'
         '<h2 class="demo-block-title">Plone</h2></div></div>'
     )

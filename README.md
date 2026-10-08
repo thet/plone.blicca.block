@@ -71,7 +71,7 @@ host dependency is distributed differently.
    This blueprint itself intentionally keeps `demo-block`.
 5. Implement the fields in `resources/src/demo-block/schema.ts`, editing in
    `Edit.tsx`, frontend rendering in `View.tsx`, and public rendering in
-   `src/plone/blicca/block/browser/demo_block/view.py` and `view.pt`. Keep data
+   `src/plone/blicca/block/blocks/demo_block/view.py` and `view.pt`. Keep data
    normalization and CSS anatomy consistent across both renderers. Adapt the
    shared examples in `tests/anatomy-cases.json` and the existing tests.
 6. Rebuild the frontend and run both test suites. Verify installation,
@@ -92,7 +92,7 @@ The frontend is also a source package named `plone.blicca.block`, rooted in
 default installer, and call it with the frontend's registry configuration:
 
 ```ts
-import installDemoBlock from 'plone.blicca.block';
+import installDemoBlock from "plone.blicca.block";
 
 installDemoBlock(config);
 ```
