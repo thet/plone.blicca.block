@@ -15,3 +15,9 @@ export const BlockInfo = {
 };
 
 export { BLOCK_TYPE, Edit, Icon, Schema, View };
+
+// Each browser bundle installs only the block declared by its registry entry.
+export default function install(config: any) {
+  config.blocks.blocksConfig[BLOCK_TYPE] = BlockInfo;
+  return config;
+}
