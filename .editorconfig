@@ -1,0 +1,19 @@
+root = true
+
+[*]
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+charset = utf-8
+indent_style = space
+
+[*.{py,cfg,ini,toml}]
+indent_size = 4
+
+[*.{html,dtml,pt,zpt,xml,zcml,js,jsx,json,ts,tsx,less,scss,css,sass,yml,yaml}]
+indent_size = 2
+
+[{Makefile,.gitmodules}]
+indent_style = tab
+indent_size = unset
+tab_width = unset

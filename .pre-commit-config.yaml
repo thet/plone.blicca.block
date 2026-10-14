@@ -1,0 +1,38 @@
+exclude: ^src/plone/blicca/block/static/|^resources/pnpm-lock.yaml$|\.map$
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v6.0.0
+  hooks:
+    - id: check-yaml
+    - id: end-of-file-fixer
+    - id: trailing-whitespace
+    - id: check-merge-conflict
+-   repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.10
+    hooks:
+    -   id: ruff
+        args:
+        - --fix
+    -   id: ruff-format
+-   repo: https://github.com/collective/zpretty
+    rev: 4.0.3
+    hooks:
+    -   id: zpretty
+-   repo: https://github.com/codespell-project/codespell
+    rev: v2.4.3
+    hooks:
+    -   id: codespell
+        additional_dependencies:
+        - tomli
+-   repo: https://github.com/mgedmin/check-manifest
+    rev: '0.51'
+    hooks:
+    -   id: check-manifest
+-   repo: https://github.com/regebro/pyroma
+    rev: 5.1b1
+    hooks:
+    -   id: pyroma
+-   repo: https://github.com/collective/i18ndude
+    rev: 6.3.0
+    hooks:
+    -   id: i18ndude
